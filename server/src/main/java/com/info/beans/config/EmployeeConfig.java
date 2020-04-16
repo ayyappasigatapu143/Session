@@ -74,20 +74,17 @@ public class EmployeeConfig {
 
 		return transactionManager;
 	}
-
 	@Bean
+	public Docket postsApi() {
+		return new Docket(DocumentationType.SWAGGER_2).select().
+				apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build();
+	}
+
+	 	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
 
-	 @Bean
-	    public Docket api() { 
-	        return new Docket(DocumentationType.SWAGGER_2)  
-	          .select()                                  
-	          .apis(RequestHandlerSelectors.any())              
-	          .paths(PathSelectors.any())                          
-	          .build();                                           
-	    }
 	Properties getJpaProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
@@ -95,4 +92,4 @@ public class EmployeeConfig {
 
 		return properties;
 	}
-}  
+}
