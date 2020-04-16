@@ -22,17 +22,18 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.google.common.base.Preconditions;
+
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2; 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@EnableSwagger2
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 @EntityScan(basePackages = { "com.info.beans.model" })
+@EnableSwagger2
 @ComponentScan(basePackages = {"com"})
 public class EmployeeConfig {
 
@@ -79,15 +80,7 @@ public class EmployeeConfig {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
 
-	Properties getJpaProperties() {
-		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-
-		return properties;
-	}
-	
-	@Bean
+	 @Bean
 	    public Docket api() { 
 	        return new Docket(DocumentationType.SWAGGER_2)  
 	          .select()                                  
@@ -95,4 +88,11 @@ public class EmployeeConfig {
 	          .paths(PathSelectors.any())                          
 	          .build();                                           
 	    }
-}
+	Properties getJpaProperties() {
+		Properties properties = new Properties();
+		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+
+		return properties;
+	}
+}  
